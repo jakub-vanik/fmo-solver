@@ -1,0 +1,28 @@
+name: Build
+on:
+  release:
+    types: [ created ]
+env:
+  BUILD_TYPE: Release
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+    - name: Upload
+      run: gh release upload ${{github.event.release.tag_name}} ${{github.workspace}}/build/fmo_solver
+  windows-build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+    - name: Upload
+      run: gh release upload ${{github.event.release.tag_name}} ${{github.workspace}}/build/${{env.BUILD_TYPE}}/fmo_solver.exe
