@@ -1,5 +1,6 @@
 
 #include "aggregator.h"
+#include "error.h"
 #include "expander.h"
 #include "input.h"
 #include "queue.h"
@@ -10,7 +11,10 @@
 int main(int argc, char *argv[])
 {
   std::cout << "FmoSolver " << VERSION << std::endl << std::endl;
-  if (argc == 3) {
+  try {
+    if (argc != 3) {
+      throw Error("Incorrect arguments!");
+    }
     std::string input_path(argv[1]);
     std::string threshold(argv[2]);
     Input input(input_path, std::stof(threshold));
@@ -33,8 +37,9 @@ int main(int argc, char *argv[])
       }
       aggregator.print();
     }
-  } else {
-    std::cout << "Incorrect arguments" << std::endl;
+    return 0;
+  } catch (Error &error) {
+    std::cout << error.getMessage() << std::endl;
+    return 1;
   }
-  return 0;
 }
