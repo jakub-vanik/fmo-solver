@@ -3,6 +3,8 @@
 #include "config.h"
 #include "fluorochrom.h"
 
+#include <string>
+
 class Input
 {
 public:
@@ -15,5 +17,6 @@ private:
   unsigned int fluorochroms_count;
   Fluorochrom fluorochroms[Config::size];
   unsigned long long collisions[Config::size];
+  void load(const std::string &input_path);
   void prepare(float threshold);
 };
