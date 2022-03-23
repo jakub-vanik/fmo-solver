@@ -9,6 +9,7 @@
 
 int main(int argc, char *argv[])
 {
+  std::cout << "FmoSolver " << VERSION << std::endl << std::endl;
   if (argc == 3) {
     std::string input_path(argv[1]);
     std::string threshold(argv[2]);

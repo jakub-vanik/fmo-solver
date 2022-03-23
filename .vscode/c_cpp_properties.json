@@ -5,7 +5,9 @@
       "includePath": [
         "${workspaceFolder}/**"
       ],
-      "defines": [],
+      "defines": [
+        "VERSION=\"v0.0.0\""
+      ],
       "compilerPath": "/usr/bin/c++",
       "cStandard": "c17",
       "cppStandard": "c++17"

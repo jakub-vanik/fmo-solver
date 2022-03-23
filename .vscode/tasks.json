@@ -19,6 +19,7 @@
       "command": "cmake",
       "args": [
         "-DCMAKE_BUILD_TYPE=Debug",
+        "-DVERSION=\"v0.0.0\"",
         "-S",
         ".",
         "-B",
