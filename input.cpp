@@ -1,5 +1,7 @@
 #include "input.h"
 
+#include "error.h"
+
 #include <algorithm>
 #include <fstream>
 #include <sstream>
@@ -10,6 +12,9 @@ Input::Input(const std::string &input_path, float threshold) :
 {
   std::ifstream input_file;
   input_file.open(input_path);
+  if (input_file.fail()) {
+    throw Error("Unable to read input file!");
+  }
   std::string line;
   while (std::getline(input_file, line)) {
     std::stringstream stream(line);
