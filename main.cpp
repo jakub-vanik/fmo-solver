@@ -6,7 +6,9 @@
 #include "queue.h"
 #include "worker.h"
 
+#include <cstddef>
 #include <iostream>
+#include <string>
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +18,16 @@ int main(int argc, char *argv[])
       throw Error("Incorrect arguments!");
     }
     std::string input_path(argv[1]);
-    std::string threshold(argv[2]);
-    Input input(input_path, std::stof(threshold));
+    std::string threshold_string(argv[2]);
+    if (threshold_string.empty()) {
+      throw Error("Invalid threshold!");
+    }
+    size_t idx = 0;
+    float threshold = std::stof(threshold_string, &idx);
+    if (idx != threshold_string.length()) {
+      throw Error("Invalid threshold!");
+    }
+    Input input(input_path, threshold);
     for (unsigned int groups_count = 1;
          groups_count <= input.getFluorochromsCount(); groups_count++) {
       std::cout << "Trying " << groups_count << " groups" << std::endl;

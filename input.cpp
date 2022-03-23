@@ -2,6 +2,7 @@
 
 #include "error.h"
 
+#include <cstddef>
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -61,7 +62,15 @@ void Input::load(const std::string &input_path)
       auto &fluorochrom = fluorochroms[fluorochroms_count++];
       fluorochrom.name = parts[0];
       for (unsigned int i = 0; i < spreads_count; i++) {
-        fluorochrom.spreads[i] = std::stof(parts[i + 1]);
+        std::string &part = parts[i + 1];
+        if (part.empty()) {
+          throw Error("Invalid spread!");
+        }
+        size_t idx = 0;
+        fluorochrom.spreads[i] = std::stof(part, &idx);
+        if (idx != part.length()) {
+          throw Error("Invalid spread!");
+        }
       }
     }
   }
